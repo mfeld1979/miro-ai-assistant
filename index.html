@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>Assistent-Test</title></head>
+  <body>
+    <h2>Assistent-Test</h2>
+    <input id="q" placeholder="Frage..." />
+    <button id="send">Senden</button>
+    <pre id="out"></pre>
+    <script>
+      const WEBHOOK_URL = "DEINE_MAKE_WEBHOOK_URL";
+      document.getElementById("send").onclick = async () => {
+        const q = document.getElementById("q").value;
+        const res = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: q })
+        });
+        const data = await res.json();
+        document.getElementById("out").textContent =
+          data.answer || JSON.stringify(data, null, 2);
+      };
+    </script>
+  </body>
+</html>
